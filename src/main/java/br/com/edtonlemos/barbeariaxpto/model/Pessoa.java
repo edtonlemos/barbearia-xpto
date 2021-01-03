@@ -1,14 +1,29 @@
 package br.com.edtonlemos.barbeariaxpto.model;
 
-public abstract class Pessoa {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Pessoa implements Serializable{
 	
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id @GeneratedValue(strategy=GenerationType.TABLE)
+	private int id;
 	private String nome;
 	private String telefone;
 	private String email;
 	private String documento;
 	
 	public Pessoa(String nome, String telefone, String email, String documento) {
-		super();
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
@@ -38,6 +53,14 @@ public abstract class Pessoa {
 	}
 	public void setDocumento(String documento) {
 		this.documento = documento;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
