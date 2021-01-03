@@ -11,8 +11,8 @@ public class TestesModel {
 
 	public static void main(String[] args) {
 
-		Usuario admin = new Usuario("Edton", "7999060211", "edh.15@hotmail.com",
-				"23297465", "edtonlemos", "1234");
+		Usuario admin = new Usuario("Edton", "79111112222", "ed@hotmail.com",
+				"23297465", "edtonlogin", "1234");
 		System.out.println(admin.getNome() + ", tel: " + admin.getTelefone());
 		
 		Cliente cliente1 = new Cliente("Daniel", "79111112222", "daniel@bol.com.br", "123456789");
