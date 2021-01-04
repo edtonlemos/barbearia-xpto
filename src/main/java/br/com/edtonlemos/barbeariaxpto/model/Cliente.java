@@ -1,9 +1,6 @@
 package br.com.edtonlemos.barbeariaxpto.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class Cliente extends Pessoa{
@@ -14,6 +11,10 @@ public class Cliente extends Pessoa{
 	
 	public Cliente(String nome, String telefone, String email, String documento) {
 		super(nome, telefone, email, documento);
+		setFidelidade(0);
+	}
+	
+	public Cliente() {
 		setFidelidade(0);
 	}
 

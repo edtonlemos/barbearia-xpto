@@ -6,12 +6,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.1</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.4.0</version>
+		<relativePath />
 	</parent>
+
 	<groupId>br.com.edtonlemos</groupId>
 	<artifactId>barbearia-xpto</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>barbearia-xpto</name>
 	<description>Projeto apresentado como requesito parcial para vaga de Desenvolvedor na ESIG Group.</description>
 
@@ -19,7 +21,20 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<joinfaces.version>4.4.0-rc1</joinfaces.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.joinfaces</groupId>
+				<artifactId>joinfaces-dependencies</artifactId>
+				<version>${joinfaces.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -33,18 +48,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/javax.faces/jsf-api -->
-		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -74,6 +82,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- JoinFaces dependency -->
+		<dependency>
+			<groupId>org.joinfaces</groupId>
+			<artifactId>primefaces-spring-boot-starter</artifactId>
+		</dependency>
 
 	</dependencies>
 

@@ -30,6 +30,9 @@ public abstract class Pessoa implements Serializable{
 		this.documento = documento;
 	}
 	
+	public Pessoa() {
+	}
+	
 	public String getNome() {
 		return nome;
 	}
