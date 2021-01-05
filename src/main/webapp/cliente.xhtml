@@ -1,18 +1,51 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head> 
-<body> 
-<h1>Cadastro de Cliente</h1>
+<h:head></h:head>
+<body>
+	<h1>Cadastro de Cliente</h1>
 
-<h:form>
-	Nome: <h:inputText value="#{clienteController.cliente.nome}" />
-	E-mail: <h:inputText value="#{clienteController.cliente.email}" />
-	<h:commandButton action="#{clienteController.salvar}" value="Salvar" />
-</h:form>
+	<h:form id="frmCliente">
+		Nome: <h:inputText value="#{clienteController.cliente.nome}"
+				required="true" />
+		E-mail: <h:inputText value="#{clienteController.cliente.email}" />
+			<h:commandButton action="#{clienteController.salvar}" value="Salvar">
+				<f:ajax execute="frmCliente" render="frmCliente"></f:ajax>
+			</h:commandButton>
+			
+			<h:commandButton rendered="#{clienteController.modoEdicao}" action="#{clienteController.cancelar}" value="Cancelar">
+				<f:ajax render="frmCliente"></f:ajax>
+			</h:commandButton>
+			
+			<h:dataTable value="#{clienteController.clientes}" var="cliente"
+				id="dtClientes">
+	
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+					#{cliente.id}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{cliente.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">E-mail</f:facet>
+					#{cliente.email}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ação</f:facet>
+					<h:commandButton action="#{clienteController.editar(cliente)}" value="Editar">
+						<f:ajax render="frmCliente"/>
+					</h:commandButton>
+					<h:commandButton action="#{clienteController.remover(cliente)}" value="Remover" onclick="return window.confirm('Certeza?')">
+						<f:ajax render="frmCliente"/>
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+	</h:form>
 
-</body> 
+</body>
 </html>

@@ -21,7 +21,7 @@ public class TestesModel {
 		Servico cabelo = new Servico("Cabelo", new BigDecimal(28.0));
 		Servico hidratacao = new Servico("Hidratação", new BigDecimal(8.25));
 		
-		Agendamento agenda = new Agendamento(cliente1, "Cliente irá trazer o próprio produto", "05/01/2021 08:30");
+		Agendamento agenda = new Agendamento("Edton", "Cliente irá trazer o próprio produto", "05/01/2021 08:30");
 		
 		agenda.adicionarServico(cabelo);
 //		agenda.adicionarServico(barba);

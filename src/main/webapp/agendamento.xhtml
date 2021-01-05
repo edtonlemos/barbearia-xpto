@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+	<h1>Agendamento - Barbearia XPTO</h1>
+
+	<h:form id="frmAgendamento">
+		
+		Nome: <h:inputText value="#{agendamentoController.agendamento.nome}"
+			required="true" />
+		Horário: <h:inputText
+			value="#{agendamentoController.agendamento.horario}" />
+		Observação: <h:inputText
+			value="#{agendamentoController.agendamento.observacao}" />
+
+		<h:commandButton action="#{agendamentoController.salvar}"
+			value="Salvar">
+			<f:ajax execute="frmAgendamento" render="frmAgendamento"></f:ajax>
+		</h:commandButton>
+
+		<h2 align="center">Agendamentos:</h2>
+
+		<h:dataTable value="#{agendamentoController.agendamentos}"
+			var="agendamento" id="dtAgendamentos">
+
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+					#{agendamento.id}
+				</h:column>
+			<h:column>
+				<f:facet name="header">Nome do Cliente</f:facet>
+					#{agendamento.nome}
+				</h:column>
+			<h:column>
+				<f:facet name="header">Horário</f:facet>
+					#{agendamento.horario}
+				</h:column>
+			<h:column>
+				<f:facet name="header">Observação</f:facet>
+					#{agendamento.observacao}
+				</h:column>
+			
+		</h:dataTable>
+
+	</h:form>
+
+</body>
+</html>
