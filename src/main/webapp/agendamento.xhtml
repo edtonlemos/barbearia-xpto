@@ -9,14 +9,25 @@
 	<h1>Agendamento - Barbearia XPTO</h1>
 
 	<h:form id="frmAgendamento">
+
+		<h:messages id="mensagens" />
+
 		<fieldset>
 			<legend>Novo Agendamento</legend>
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Nome: " for="titulo" />
 				<h:inputText value="#{agendamentoController.agendamento.nome}"
-					required="true" />
+					required="true" requiredMessage="Nome do cliente é obrigatório!"
+					validatorMessage="O nome do cliente não pode exceder 40 caracteres.">
+					<f:validateLength maximum="40" />
+					<f:ajax event="blur" render="mensagens" />
+				</h:inputText>
 				<h:outputLabel value="Horário: " for="horario" />
-				<h:inputText value="#{agendamentoController.agendamento.horario}" />
+				<h:inputText
+					value="#{agendamentoController.agendamento.horario.time}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+						timeZone="America/Sao_Paulo" />
+				</h:inputText>
 				<h:outputLabel value="Observação: " for="observacao" />
 				<h:inputText value="#{agendamentoController.agendamento.observacao}" />
 			</h:panelGrid>
@@ -24,25 +35,35 @@
 
 		<fieldset>
 			<legend>Dados dos serviços</legend>
-				<h:outputLabel value="Selecione serviço: " for="servico" />
-				<h:selectOneMenu value="#{agendamentoController.servicoId}">
-					<f:selectItems value="#{agendamentoController.servicos}"
-						var="servico" itemLabel="#{servico.descricao} -> #{servico.valor}"
-						itemValue="#{servico.id}" />
-				</h:selectOneMenu>
-				<h:commandButton value="Inserir serviço"
-					action="#{agendamentoController.inserirServico}" />
-				<h:dataTable value="#{agendamentoController.servicosDoAgendamento}" var="servico">
-					<h:column>
-						<f:facet name="header">Serviço</f:facet>
-						<h:outputText value="#{servico.descricao}" />
-					</h:column>	
-					<h:column>
-						<f:facet name="header">Valor</f:facet>
-						<h:outputText value="#{servico.valor}" />
-					</h:column>					
-				</h:dataTable>
-				<h:outputText value="Valor Total: #{agendamentoController.agendamento.valor_total}" />
+			<h:outputLabel value="Selecione serviço: " for="servico" />
+			<h:selectOneMenu value="#{agendamentoController.servicoId}"
+				id="servico">
+				<f:selectItems value="#{agendamentoController.servicos}"
+					var="servico" itemLabel="#{servico.descricao} -> #{servico.valor}"
+					itemValue="#{servico.id}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Inserir serviço"
+				action="#{agendamentoController.inserirServico}">
+<!-- 				<f:ajax execute="servico" render="servicos_selecionados"></f:ajax> -->
+			</h:commandButton>
+			<h:dataTable value="#{agendamentoController.servicosDoAgendamento}"
+				var="servico" id="servicos_selecionados">
+				<h:column>
+					<f:facet name="header">Serviço</f:facet>
+					<h:outputText value="#{servico.descricao}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Valor</f:facet>
+					<h:outputText value="#{servico.valor}" />
+				</h:column>
+			</h:dataTable>
+
+			<h:outputText
+				value="Valor Total: #{agendamentoController.agendamento.valor_total}" id="valor_total">
+				<f:convertNumber type="currency" pattern="R$ #0.00"
+					currencySymbol="R$" locale="pt_BR" />
+			</h:outputText>
+
 		</fieldset>
 
 		<h:commandButton action="#{agendamentoController.salvar}"
@@ -57,20 +78,23 @@
 
 			<h:column>
 				<f:facet name="header">ID</f:facet>
-					#{agendamento.id}
-				</h:column>
+				<h:outputText value="#{agendamento.id}" />
+			</h:column>
 			<h:column>
 				<f:facet name="header">Nome do Cliente</f:facet>
-					#{agendamento.nome}
-				</h:column>
+				<h:outputText value="#{agendamento.nome}" />
+			</h:column>
 			<h:column>
 				<f:facet name="header">Horário</f:facet>
-					#{agendamento.horario}
-				</h:column>
+				<h:outputText value="#{agendamento.horario.time}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+						timeZone="America/Sao_Paulo" />
+				</h:outputText>
+			</h:column>
 			<h:column>
 				<f:facet name="header">Observação</f:facet>
-					#{agendamento.observacao}
-				</h:column>
+				<h:outputText value="#{agendamento.observacao}" />
+			</h:column>
 
 		</h:dataTable>
 

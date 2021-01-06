@@ -1,21 +1,15 @@
 package br.com.edtonlemos.barbeariaxpto.model;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Agendamento {
@@ -24,7 +18,7 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String horario;
+	private Calendar horario = Calendar.getInstance();
 	private String observacao;
 	private BigDecimal valor_total;
 
@@ -75,11 +69,11 @@ public class Agendamento {
 		this.observacao = observacao;
 	}
 
-	public String getHorario() {
+	public Calendar getHorario() {
 		return horario;
 	}
 
-	public void setHorario(String horario) {
+	public void setHorario(Calendar horario) {
 		this.horario = horario;
 	}
 

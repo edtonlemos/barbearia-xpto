@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +69,9 @@ public class AgendamentoController {
 //			agendamentos.add(agendamento);
 		
 		if(agendamento.getServicos().isEmpty()) {
-			throw new RuntimeException("Um agendamento precisa de pelo menos um serviço.");
+//			throw new RuntimeException("Um agendamento precisa de pelo menos um serviço.");
+			FacesContext.getCurrentInstance().addMessage("servico", new FacesMessage("O Agendamento precisa de pelo menos um serviço!"));
+			return;
 		}
 		this.agendamento = new Agendamento();
 		iniciaListaAgendamentos();
