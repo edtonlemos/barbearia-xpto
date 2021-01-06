@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.edtonlemos.barbeariaxpto.model.Agendamento;
 import br.com.edtonlemos.barbeariaxpto.model.Servico;
 import br.com.edtonlemos.barbeariaxpto.repository.ServicoRepository;
 
@@ -18,10 +19,16 @@ public class ServicoController {
 	
 	@Autowired
 	private ServicoRepository servicoRepository;
-	private Servico servico;
+	private Servico servico = new Servico();
 	private List<Servico> servicos = new ArrayList<Servico>();
 	private boolean modoEdicao = false;
 	
+	public boolean isModoEdicao() {
+		return modoEdicao;
+	}
+	public void setModoEdicao(boolean modoEdicao) {
+		this.modoEdicao = modoEdicao;
+	}
 	public Servico getServico() {
 		return servico;
 	}
@@ -34,16 +41,17 @@ public class ServicoController {
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
-	public boolean isModoEdicao() {
-		return modoEdicao;
-	}
-	public void setModoEdicao(boolean modoEdicao) {
-		this.modoEdicao = modoEdicao;
-	}
-	
+
 	@PostConstruct
 	public void iniciaListaServicos() {
 		setServicos(servicoRepository.findAll());
+	}
+	
+	public void salvar() {
+		servicoRepository.save(servico);
+		if(!isModoEdicao())
+			servicos.add(servico);
+		this.servico = new Servico();
 	}
 
 }

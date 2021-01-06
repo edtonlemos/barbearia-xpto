@@ -7,5 +7,5 @@ import br.com.edtonlemos.barbeariaxpto.model.Servico;
 
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Integer>{
-
+	
 }

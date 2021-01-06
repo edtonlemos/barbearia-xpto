@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,17 +28,11 @@ public class Agendamento {
 	private String observacao;
 	private BigDecimal valor_total;
 
-	@OneToMany
+	@ManyToMany
 	private List<Servico> servicos = new ArrayList<Servico>(); // precisa ser instanciado
 
-	public Agendamento(String nome, String observacao, String horario) {
-		this.observacao = observacao;
-		this.horario = horario;
-		this.valor_total = new BigDecimal(0);
-	}
-
 	public Agendamento() {
-		this.valor_total = new BigDecimal(0);
+		this.valor_total = new BigDecimal(0.0);
 	}
 
 	public Integer getId() {
@@ -95,10 +90,6 @@ public class Agendamento {
 	public void adicionarServico(Servico servico) {
 		this.servicos.add(servico);
 		this.valor_total = this.valor_total.add(servico.getValor());
-	}
-
-	public String listarServicos() {
-		return this.servicos.toString();
 	}
 
 	@Override

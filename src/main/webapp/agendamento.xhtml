@@ -5,17 +5,45 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head></h:head>
-<body>
+<h:body>
 	<h1>Agendamento - Barbearia XPTO</h1>
 
 	<h:form id="frmAgendamento">
-		
-		Nome: <h:inputText value="#{agendamentoController.agendamento.nome}"
-			required="true" />
-		Horário: <h:inputText
-			value="#{agendamentoController.agendamento.horario}" />
-		Observação: <h:inputText
-			value="#{agendamentoController.agendamento.observacao}" />
+		<fieldset>
+			<legend>Novo Agendamento</legend>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nome: " for="titulo" />
+				<h:inputText value="#{agendamentoController.agendamento.nome}"
+					required="true" />
+				<h:outputLabel value="Horário: " for="horario" />
+				<h:inputText value="#{agendamentoController.agendamento.horario}" />
+				<h:outputLabel value="Observação: " for="observacao" />
+				<h:inputText value="#{agendamentoController.agendamento.observacao}" />
+			</h:panelGrid>
+		</fieldset>
+
+		<fieldset>
+			<legend>Dados dos serviços</legend>
+				<h:outputLabel value="Selecione serviço: " for="servico" />
+				<h:selectOneMenu value="#{agendamentoController.servicoId}">
+					<f:selectItems value="#{agendamentoController.servicos}"
+						var="servico" itemLabel="#{servico.descricao} -> #{servico.valor}"
+						itemValue="#{servico.id}" />
+				</h:selectOneMenu>
+				<h:commandButton value="Inserir serviço"
+					action="#{agendamentoController.inserirServico}" />
+				<h:dataTable value="#{agendamentoController.servicosDoAgendamento}" var="servico">
+					<h:column>
+						<f:facet name="header">Serviço</f:facet>
+						<h:outputText value="#{servico.descricao}" />
+					</h:column>	
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<h:outputText value="#{servico.valor}" />
+					</h:column>					
+				</h:dataTable>
+				<h:outputText value="Valor Total: #{agendamentoController.agendamento.valor_total}" />
+		</fieldset>
 
 		<h:commandButton action="#{agendamentoController.salvar}"
 			value="Salvar">
@@ -43,10 +71,10 @@
 				<f:facet name="header">Observação</f:facet>
 					#{agendamento.observacao}
 				</h:column>
-			
+
 		</h:dataTable>
 
 	</h:form>
 
-</body>
+</h:body>
 </html>

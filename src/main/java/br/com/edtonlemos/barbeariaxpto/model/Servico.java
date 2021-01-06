@@ -18,11 +18,6 @@ public class Servico implements Serializable{
 	private String descricao;
 	private BigDecimal valor;
 	
-	public Servico(String descricao, BigDecimal valor) {
-		this.descricao = descricao;
-		this.valor = valor;
-	}
-	
 	public Servico() {
 	}
 	

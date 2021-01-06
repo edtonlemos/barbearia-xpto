@@ -5,14 +5,30 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head></h:head>
-<body>
+<h:body>
 
-	<h1>Cadastro de Serviços - Barbearia XPTO</h1>
+	<h1>Serviços - Barbearia XPTO</h1>
 
 	<h:form id="frmServico">
+		<fieldset>
+			<legend>Novo Serviço</legend>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Descrição: " for="descricao" />
+				<h:inputText value="#{servicoController.servico.descricao}"
+					required="true" />
+				<h:outputLabel value="Valor: " for="valor" required="true" />
+				<h:inputText value="#{servicoController.servico.valor}" />
+				<h:commandButton action="#{servicoController.salvar}"
+					value="Salvar">
+					<f:ajax execute="frmServico" render="frmServico"></f:ajax>
+				</h:commandButton>
+			</h:panelGrid>
+		</fieldset>
 
-		<h:dataTable value="#{servicoController.servicos}" var="servico"
-			id="dtServicos">
+		<h2 align="center">Tabela de Serviços:</h2>
+
+		<h:dataTable value="#{servicoController.servicos}"
+			var="servico" id="dtServicos">
 
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -28,8 +44,7 @@
 				</h:column>
 
 		</h:dataTable>
-
 	</h:form>
 
-</body>
+</h:body>
 </html>
