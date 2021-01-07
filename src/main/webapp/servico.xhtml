@@ -4,47 +4,82 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
-<h:body>
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
+		<h1>Serviços</h1>
+	</ui:define>
+	<ui:define name="conteudo">
 
-	<h1>Serviços - Barbearia XPTO</h1>
+		<h:form>
+			<h:commandLink action="#{servicoController.formAgendamento}"
+				value="Ir para agendamentos" immediate="true" />
+			<br />
+			<br />
+		</h:form>
 
-	<h:form id="frmServico">
-		<fieldset>
-			<legend>Novo Serviço</legend>
-			<h:panelGrid columns="2">
-				<h:outputLabel value="Descrição: " for="descricao" />
-				<h:inputText value="#{servicoController.servico.descricao}"
-					required="true" />
-				<h:outputLabel value="Valor: " for="valor" required="true" />
-				<h:inputText value="#{servicoController.servico.valor}" />
-				<h:commandButton action="#{servicoController.salvar}"
-					value="Salvar">
-					<f:ajax execute="frmServico" render="frmServico"></f:ajax>
-				</h:commandButton>
-			</h:panelGrid>
-		</fieldset>
+		<h:form id="frmServico">
 
-		<h2 align="center">Tabela de Serviços:</h2>
+			<h:messages id="mensagens" />
 
-		<h:dataTable value="#{servicoController.servicos}"
-			var="servico" id="dtServicos">
+			<fieldset>
+				<legend>Novo Serviço</legend>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Descrição: " for="descricao" />
+					<h:inputText value="#{servicoController.servico.descricao}"
+						required="true"
+						requiredMessage="Descrição do serviço é obrigatório!" />
+					<h:outputLabel value="Valor: " for="valor" />
+					<h:inputText value="#{servicoController.servico.valor}"
+						required="true" requiredMessage="Valor do serviço é obrigatório!" />
+					<h:commandButton action="#{servicoController.salvar}"
+						value="Salvar">
+						<f:ajax execute="frmServico" render="frmServico"></f:ajax>
+					</h:commandButton>
+					<h:commandButton rendered="#{servicoController.modoEdicao}"
+						action="#{servicoController.cancelar}" value="Cancelar">
+						<f:ajax render="frmServico"></f:ajax>
+					</h:commandButton>
+				</h:panelGrid>
+			</fieldset>
 
-			<h:column>
-				<f:facet name="header">ID</f:facet>
+			<h2 align="center">Tabela de Serviços:</h2>
+
+			<h:form id="frmListaServicos">
+				<h:dataTable value="#{servicoController.servicos}" var="servico"
+					id="dtServicos">
+
+					<h:column>
+						<f:facet name="header">ID</f:facet>
 					#{servico.id}
 				</h:column>
-			<h:column>
-				<f:facet name="header">Descrição</f:facet>
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>
 					#{servico.descricao}
 				</h:column>
-			<h:column>
-				<f:facet name="header">Valor</f:facet>
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
 					#{servico.valor}
 				</h:column>
+					<h:column>
+						<f:facet name="header">Remover</f:facet>
+						<h:commandLink value="X"
+							action="#{servicoController.remover(servico)}">
+							<f:ajax execute="frmListaServicos"
+								render="@form frmListaServicos" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<!--<f:facet name="header">Editar</f:facet> -->
+						<h:commandLink value="editar"
+							action="#{servicoController.editar(servico)}">
+							<f:ajax execute="frmListaServicos"
+								render="@form frmListaServicos" />
+						</h:commandLink>
+					</h:column>
 
-		</h:dataTable>
-	</h:form>
-
-</h:body>
+				</h:dataTable>
+			</h:form>
+		</h:form>
+	</ui:define>
+</ui:composition>
 </html>

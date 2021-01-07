@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Agendamento {
 	private String observacao;
 	private BigDecimal valor_total;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER) 
 	private List<Servico> servicos = new ArrayList<Servico>(); // precisa ser instanciado
 
 	public Agendamento() {
@@ -84,6 +85,11 @@ public class Agendamento {
 	public void adicionarServico(Servico servico) {
 		this.servicos.add(servico);
 		this.valor_total = this.valor_total.add(servico.getValor());
+	}
+	
+	public void removerServico(Servico servico) {
+		this.servicos.remove(servico);
+		this.valor_total = this.valor_total.subtract(servico.getValor());
 	}
 
 	@Override

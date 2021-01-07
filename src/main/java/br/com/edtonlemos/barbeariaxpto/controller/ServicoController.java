@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.edtonlemos.barbeariaxpto.model.Agendamento;
+import br.com.edtonlemos.barbeariaxpto.model.Cliente;
 import br.com.edtonlemos.barbeariaxpto.model.Servico;
 import br.com.edtonlemos.barbeariaxpto.repository.ServicoRepository;
 
@@ -52,6 +53,26 @@ public class ServicoController {
 		if(!isModoEdicao())
 			servicos.add(servico);
 		this.servico = new Servico();
+		this.setModoEdicao(false);
 	}
-
+	
+	public void remover(Servico servico) {
+		servicoRepository.delete(servico);
+		servicos.remove(servico);
+	}
+	
+	public String formAgendamento() {
+		return "agendamento?faces-redirect=true";
+	}
+	
+	public void editar(Servico servico) {
+		this.servico = servico;
+		setModoEdicao(true);
+	}
+	
+	public void cancelar() {
+		servico = new Servico();
+		setModoEdicao(false);
+	}
+	
 }
