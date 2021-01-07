@@ -9,8 +9,6 @@ import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.edtonlemos.barbeariaxpto.model.Agendamento;
-import br.com.edtonlemos.barbeariaxpto.model.Cliente;
 import br.com.edtonlemos.barbeariaxpto.model.Servico;
 import br.com.edtonlemos.barbeariaxpto.repository.ServicoRepository;
 
