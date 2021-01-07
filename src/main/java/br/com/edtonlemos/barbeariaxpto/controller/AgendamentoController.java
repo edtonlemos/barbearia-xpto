@@ -52,6 +52,7 @@ public class AgendamentoController {
 		}
 		this.agendamento = new Agendamento();
 		iniciaListaAgendamentos();
+		setModoEdicao(false);
 	}
 
 	/**

@@ -73,6 +73,7 @@ public class ServicoController {
 	public void cancelar() {
 		servico = new Servico();
 		setModoEdicao(false);
+		iniciaListaServicos();
 	}
 	
 }

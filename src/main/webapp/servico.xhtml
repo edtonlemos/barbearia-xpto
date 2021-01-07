@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="_template.xhtml">
 	<ui:define name="titulo">
@@ -10,7 +11,7 @@
 	</ui:define>
 	<ui:define name="conteudo">
 
-		<h:form>
+		<h:form id="linkando">
 			<h:commandLink action="#{servicoController.formAgendamento}"
 				value="Ir para agendamentos" immediate="true" />
 			<br />
@@ -19,10 +20,9 @@
 
 		<h:form id="frmServico">
 
-			<h:messages id="mensagens" />
+			<p:messages id="mensagens" />
 
-			<fieldset>
-				<legend>Novo Serviço</legend>
+			<p:fieldset legend="Novo Serviço">
 				<h:panelGrid columns="2">
 					<h:outputLabel value="Descrição: " for="descricao" />
 					<h:inputText value="#{servicoController.servico.descricao}"
@@ -31,53 +31,60 @@
 					<h:outputLabel value="Valor: " for="valor" />
 					<h:inputText value="#{servicoController.servico.valor}"
 						required="true" requiredMessage="Valor do serviço é obrigatório!" />
-					<h:commandButton action="#{servicoController.salvar}"
-						value="Salvar">
-						<f:ajax execute="frmServico" render="frmServico"></f:ajax>
-					</h:commandButton>
-					<h:commandButton rendered="#{servicoController.modoEdicao}"
-						action="#{servicoController.cancelar}" value="Cancelar">
-						<f:ajax render="frmServico"></f:ajax>
-					</h:commandButton>
+					<p:commandButton action="#{servicoController.salvar}"
+						value="Salvar" process="@form" update="frmServico">
+						<!-- 						<f:ajax execute="frmServico" render="frmServico"></f:ajax> -->
+					</p:commandButton>
+					<p:commandButton rendered="#{servicoController.modoEdicao}"
+						action="#{servicoController.cancelar}" value="Cancelar"
+						process="@form" update="frmServico">
+						<!-- 						<f:ajax render="frmServico"></f:ajax> -->
+					</p:commandButton>
 				</h:panelGrid>
-			</fieldset>
+			</p:fieldset>
 
 			<h2 align="center">Tabela de Serviços:</h2>
 
 			<h:form id="frmListaServicos">
-				<h:dataTable value="#{servicoController.servicos}" var="servico"
+
+				<p:dataTable value="#{servicoController.servicos}" var="servico"
 					id="dtServicos">
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">ID</f:facet>
 					#{servico.id}
-				</h:column>
-					<h:column>
+				</p:column>
+					<p:column>
 						<f:facet name="header">Descrição</f:facet>
 					#{servico.descricao}
-				</h:column>
-					<h:column>
+				</p:column>
+					<p:column>
 						<f:facet name="header">Valor</f:facet>
 					#{servico.valor}
-				</h:column>
-					<h:column>
-						<f:facet name="header">Remover</f:facet>
+				</p:column>
+					<p:column>
+						<f:facet name="header">Remover/Editar</f:facet>
 						<h:commandLink value="X"
-							action="#{servicoController.remover(servico)}">
+							action="#{servicoController.remover(servico)}"
+							styleClass="ui-icon ui-icon-trash"
+							style="float:left;margin-right:10px"
+							onclick="return window.confirm('Deseja remover o serviço #{servico.descricao}?')">
 							<f:ajax execute="frmListaServicos"
 								render="@form frmListaServicos" />
 						</h:commandLink>
-					</h:column>
-					<h:column>
-						<!--<f:facet name="header">Editar</f:facet> -->
+						<!-- 					</p:column> -->
+						<!-- 					<p:column> -->
 						<h:commandLink value="editar"
-							action="#{servicoController.editar(servico)}">
+							action="#{servicoController.editar(servico)}"
+							styleClass="ui-icon ui-icon-pencil"
+							style="float:left;margin-right:10px">
 							<f:ajax execute="frmListaServicos"
 								render="@form frmListaServicos" />
 						</h:commandLink>
-					</h:column>
 
-				</h:dataTable>
+					</p:column>
+
+				</p:dataTable>
 			</h:form>
 		</h:form>
 	</ui:define>

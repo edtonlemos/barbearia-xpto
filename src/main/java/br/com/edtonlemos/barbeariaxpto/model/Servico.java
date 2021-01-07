@@ -19,6 +19,7 @@ public class Servico implements Serializable{
 	private BigDecimal valor;
 	
 	public Servico() {
+		
 	}
 	
 	public Integer getId() {

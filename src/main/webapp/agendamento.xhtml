@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="_template.xhtml">
 	<ui:define name="titulo">
@@ -12,47 +13,48 @@
 	<ui:define name="conteudo">
 		<h:form id="frmAgendamento">
 
-			<h:messages id="mensagens" />
+			<p:messages id="mensagens" />
 
-			<fieldset>
-				<legend>Novo Agendamento</legend>
+			<p:fieldset legend="Novo Agendamento">
 				<h:panelGrid columns="2">
-					<h:outputLabel value="Nome: " for="titulo" />
+					<h:outputLabel value="Nome do cliente: " for="titulo" />
 					<h:inputText value="#{agendamentoController.agendamento.nome}"
 						required="true" requiredMessage="Nome do cliente é obrigatório!"
 						validatorMessage="O nome do cliente não pode exceder 40 caracteres.">
 						<f:validateLength maximum="40" />
 						<f:ajax event="blur" render="mensagens" />
 					</h:inputText>
-					<h:outputLabel value="Horário: " for="horario" />
-					<h:inputText
-						value="#{agendamentoController.agendamento.horario.time}">
-						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
-							timeZone="America/Sao_Paulo" />
-					</h:inputText>
+
+					<p:outputLabel value="Horário: " for="horario" />
+					<p:calendar id="horario"
+						value="#{agendamentoController.agendamento.horario.time}"
+						pattern="dd/MM/yyyy HH:mm" timeZone="America/Sao_Paulo"
+						mask="true" />
+
+
+
 					<h:outputLabel value="Observação: " for="observacao" />
 					<h:inputText
 						value="#{agendamentoController.agendamento.observacao}" />
 				</h:panelGrid>
-			</fieldset>
+			</p:fieldset>
 
-			<fieldset>
-				<legend>Dados dos serviços</legend>
+			<p:fieldset legend="Serviços">
 
 				<h:outputLabel value="Selecione serviço: " for="servico" />
-				<h:selectOneMenu value="#{agendamentoController.servicoId}"
+				<p:selectOneMenu value="#{agendamentoController.servicoId}"
 					id="servico">
 					<f:selectItems value="#{agendamentoController.servicos}"
 						var="servico" itemLabel="#{servico.descricao} -> #{servico.valor}"
 						itemValue="#{servico.id}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<h:commandButton value="Inserir serviço"
 					action="#{agendamentoController.inserirServico}">
 					<!-- 				<f:ajax execute="servico" render="servicos_selecionados"></f:ajax> -->
 				</h:commandButton>
 
 				<h:commandLink action="#{agendamentoController.formServico}"
-					value="Cadastrar novo Serviço" immediate="true" />
+					value="ou Cadastrar novo Serviço" immediate="true" />
 				<br />
 
 				<h:dataTable value="#{agendamentoController.servicosDoAgendamento}"
@@ -73,7 +75,6 @@
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
-
 				<h:outputText
 					value="Valor Total: #{agendamentoController.agendamento.valor_total}"
 					id="valor_total">
@@ -81,61 +82,64 @@
 						currencySymbol="R$" locale="pt_BR" />
 				</h:outputText>
 
-			</fieldset>
+			</p:fieldset>
 
-			<h:commandButton action="#{agendamentoController.salvar}"
-				value="Salvar">
-				<f:ajax execute="frmAgendamento" render="frmAgendamento"></f:ajax>
-			</h:commandButton>
+			<p:commandButton action="#{agendamentoController.salvar}"
+				value="Salvar" process="frmAgendamento" update="frmAgendamento">
+				<!-- 				<f:ajax execute="frmAgendamento" render="frmAgendamento"></f:ajax> -->
+			</p:commandButton>
 
-			<h:commandButton rendered="#{agendamentoController.modoEdicao}"
-				action="#{agendamentoController.cancelar}" value="Cancelar">
-				<f:ajax render="frmAgendamento"></f:ajax>
-			</h:commandButton>
+			<p:commandButton rendered="#{agendamentoController.modoEdicao}"
+				action="#{agendamentoController.cancelar}" value="Cancelar"
+				process="@form" update="@form">
+				<!-- 				<f:ajax render="frmAgendamento"></f:ajax> -->
+			</p:commandButton>
 
 			<h2 align="center">Agendamentos:</h2>
 
 			<h:form id="frmListaAgendamentos">
 
-				<h:dataTable value="#{agendamentoController.agendamentos}"
+				<p:dataTable value="#{agendamentoController.agendamentos}"
 					var="agendamento" id="dtAgendamentos">
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">ID</f:facet>
 						<h:outputText value="#{agendamento.id}" />
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column>
 						<f:facet name="header">Nome do Cliente</f:facet>
 						<h:outputText value="#{agendamento.nome}" />
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column>
 						<f:facet name="header">Horário</f:facet>
 						<h:outputText value="#{agendamento.horario.time}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
 								timeZone="America/Sao_Paulo" />
 						</h:outputText>
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column>
 						<f:facet name="header">Observação</f:facet>
 						<h:outputText value="#{agendamento.observacao}" />
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column>
 						<f:facet name="header">Remover</f:facet>
-						<h:commandLink value="X"
-							action="#{agendamentoController.remover(agendamento)}">
+						<h:commandButton value="X"
+							action="#{agendamentoController.remover(agendamento)}"
+							styleClass="btn btn-danger"
+							onclick="return window.confirm('Realmente deseja remover o agendamento de #{agendamento.nome}?')">
 							<f:ajax execute="frmListaAgendamentos"
 								render="@form frmListaAgendamentos" />
-						</h:commandLink>
-					</h:column>
-					<h:column>
+						</h:commandButton>
+					</p:column>
+					<p:column>
 						<!--<f:facet name="header">Editar</f:facet> -->
 						<h:commandLink value="editar"
 							action="#{agendamentoController.editar(agendamento)}">
 							<f:ajax execute="frmListaAgendamentos"
 								render="@form frmListaAgendamentos" />
 						</h:commandLink>
-					</h:column>
-				</h:dataTable>
+					</p:column>
+				</p:dataTable>
 
 			</h:form>
 
