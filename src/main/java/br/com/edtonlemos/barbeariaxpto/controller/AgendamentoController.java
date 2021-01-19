@@ -37,17 +37,17 @@ public class AgendamentoController {
 	}
 
 	public void salvar() {
-		agendamentoRepository.save(agendamento);
-
-		if(!isModoEdicao())
-			agendamentos.add(agendamento);
-
 		if (agendamento.getServicos().isEmpty()) {
 //			throw new RuntimeException("Um agendamento precisa de pelo menos um serviço.");
 			FacesContext.getCurrentInstance().addMessage("servico",
 					new FacesMessage("O Agendamento precisa de pelo menos um serviço!"));
 			return;
 		}
+		
+		if(!isModoEdicao())
+			agendamentos.add(agendamento);
+		
+		agendamentoRepository.save(agendamento);
 		this.agendamento = new Agendamento();
 		iniciaListaAgendamentos();
 		setModoEdicao(false);

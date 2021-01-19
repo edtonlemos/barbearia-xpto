@@ -29,7 +29,7 @@
 						required="true"
 						requiredMessage="Descrição do serviço é obrigatório!" />
 					<h:outputLabel value="Valor: " for="valor" />
-					<h:inputText value="#{servicoController.servico.valor}"
+					<p:inputNumber symbol="R$ " value="#{servicoController.servico.valor}"
 						required="true" requiredMessage="Valor do serviço é obrigatório!" />
 					<p:commandButton action="#{servicoController.salvar}"
 						value="Salvar" process="@form" update="frmServico">
